@@ -30,18 +30,6 @@ public class GameManager : MonoBehaviour
     // ADDED
     public static GameManager gm;
 
-    public float health = 100;
-    public float playerPosX, playerPosY;
-    public bool canGrab = false;
-    public bool canDash = false;
-    public bool canJump = false;
-    public bool canCrouch = false;
-
-    /*
-    public int currentPrimaryWeaponId;
-    public int currentSecondaryWeaponId;
-    */
-
     private string filePath;
 
     private void Awake()
@@ -74,7 +62,7 @@ public class GameManager : MonoBehaviour
 
         PlayerDataSaveSystem data = new PlayerDataSaveSystem();
 
-        data.health = FindObjectOfType<Stats>().Health.CurrentValue;
+        data.health = player.GetComponentInChildren<Stats>().Health.CurrentValue;
         data.playerPosX = player.transform.position.x;
         data.playerPosY = player.transform.position.y;
         data.canGrab = playerInputHandler.grabUnlocked;
@@ -110,21 +98,12 @@ public class GameManager : MonoBehaviour
             PlayerDataSaveSystem data = (PlayerDataSaveSystem)bf.Deserialize(file);
             file.Close();
 
-            health = data.health;
+            player.GetComponentInChildren<Stats>().Health.CurrentValue = data.health;
             player.transform.position = new Vector3(data.playerPosX, data.playerPosY, 0);
             playerInputHandler.grabUnlocked = data.canGrab;
             playerInputHandler.dashUnlocked = data.canDash;
             playerInputHandler.jumpUnlocked = data.canJump;
             player.crouchUnlocked = data.canCrouch;
-
-            /*
-            playerPosX = data.playerPosX;
-            playerPosY = data.playerPosY;
-            canGrab = data.canGrab;
-            canDash = data.canDash;
-            canJump = data.canJump;
-            canCrouch = data.canCrouch;
-            */
         }
     }
 

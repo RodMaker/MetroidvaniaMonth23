@@ -17432,6 +17432,12 @@ MonoBehaviour:
   - groupID: Click
     clips:
     - {fileID: 8300000, guid: 928da4580d1032843844297f0e3f1c6f, type: 3}
+  - groupID: PlayerTakeDamage
+    clips:
+    - {fileID: 8300000, guid: dd2221ec3202027459bc845a6bb95a65, type: 3}
+  - groupID: PlayerDeath
+    clips:
+    - {fileID: 8300000, guid: dd2221ec3202027459bc845a6bb95a65, type: 3}
 --- !u!4 &533834249
 Transform:
   m_ObjectHideFlags: 0

@@ -58,7 +58,6 @@ public class Player : MonoBehaviour
 
     // ADDED
     public bool crouchUnlocked = false;
-    private GameManager gm;
 
     #region Unity Callback Functions
     private void Awake()
@@ -108,8 +107,6 @@ public class Player : MonoBehaviour
         Stats.Poise.OnCurrentValueZero += HandlePoiseCurrentValueZero;
         
         StateMachine.Initialize(IdleState);
-        
-        SetPlayer(); // ADDED
     }
 
     private void HandlePoiseCurrentValueZero()
@@ -154,12 +151,4 @@ public class Player : MonoBehaviour
 
    
     #endregion
-
-    // ADDED
-    public void SetPlayer()
-    {
-        Vector3 playerPos = new Vector3(gm.playerPosX, gm.playerPosY, 0);
-        transform.position = playerPos;
-        crouchUnlocked = gm.canCrouch;
-    }
 }
