@@ -3690,6 +3690,9 @@ MonoBehaviour:
   maxExperience: 0
   currentLevel: 0
   floatingText: {fileID: 0}
+  deathParticles:
+  - {fileID: 5096148057906189823, guid: 4a122dcc68153794295f6953dd91521e, type: 3}
+  - {fileID: 1962614393226834858, guid: 3d13ef1f52d189642930444f906fc622, type: 3}
 --- !u!1 &230895330
 GameObject:
   m_ObjectHideFlags: 0

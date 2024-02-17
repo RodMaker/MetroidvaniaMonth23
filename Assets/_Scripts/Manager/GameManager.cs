@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
 using Bardent;
+using System.Collections;
 
 [Serializable]
 class PlayerDataSaveSystem
@@ -120,8 +121,15 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        gameOverUI.SetActive(true);
         Debug.Log("Game Over");
+
+        StartCoroutine(GameOverRoutine());
+    }
+
+    private IEnumerator GameOverRoutine()
+    {
+        yield return new WaitForSeconds(1);
+        gameOverUI.SetActive(true);
     }
 
     public void Restart()

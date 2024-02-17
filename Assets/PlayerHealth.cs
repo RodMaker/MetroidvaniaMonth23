@@ -1,3 +1,4 @@
+using Bardent.CoreSystem;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -24,6 +25,13 @@ namespace Bardent
         const string LEVEL_AMOUNT_TEXT = "LevelAmountText";
 
         public GameObject floatingText;
+
+        [SerializeField] private GameObject[] deathParticles;
+
+        private ParticleManager ParticleManager =>
+            particleManager ? particleManager : Player.FindObjectOfType<Core>().GetCoreComponent(ref particleManager);
+
+        private ParticleManager particleManager;
 
         protected override void Awake()
         {
@@ -82,8 +90,6 @@ namespace Bardent
                 return;
             }
 
-            Debug.Log("MERDA");
-
             SoundManager.Instance.PlaySound3D("PlayerTakeDamage", transform.position);
             ScreenShakeManager.Instance.ShakeScreen();
             //knockback.GetKnockedBack(hitTransform, knockBackThrustAmount);
@@ -101,6 +107,11 @@ namespace Bardent
             {
                 currentHealth = 0;
                 Debug.Log("Player Death");
+
+                foreach (var particle in deathParticles)
+                {
+                    ParticleManager.StartParticles(particle);
+                }
 
                 //AudioManager.Instance.PauseMusic();
                 SoundManager.Instance.PlaySound3D("PlayerDeath", transform.position);

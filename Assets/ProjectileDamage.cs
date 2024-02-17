@@ -8,8 +8,6 @@ namespace Bardent
     {
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Debug.Log("Collided");
-
             if (other.gameObject.name == "Player")
             {
                 PlayerHealth.Instance.TakeDamage(1);
