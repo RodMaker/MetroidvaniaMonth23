@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Bardent;
 using Bardent.CoreSystem;
 using Bardent.FSM;
 using Bardent.Weapons;
@@ -58,6 +59,7 @@ public class Player : MonoBehaviour
 
     // ADDED
     public bool crouchUnlocked = false;
+    public static event Action<GameObject> OnStart;
 
     #region Unity Callback Functions
     private void Awake()
@@ -107,6 +109,15 @@ public class Player : MonoBehaviour
         Stats.Poise.OnCurrentValueZero += HandlePoiseCurrentValueZero;
         
         StateMachine.Initialize(IdleState);
+
+        OnStart.Invoke(this.gameObject); // ADDED
+        StartPlayer(); // ADDED
+    }
+
+    // ADDED
+    public void StartPlayer()
+    {
+        PlayerHealth.Instance.StartPlayer();
     }
 
     private void HandlePoiseCurrentValueZero()

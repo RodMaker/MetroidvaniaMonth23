@@ -17437,7 +17437,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: dd2221ec3202027459bc845a6bb95a65, type: 3}
   - groupID: PlayerDeath
     clips:
-    - {fileID: 8300000, guid: dd2221ec3202027459bc845a6bb95a65, type: 3}
+    - {fileID: 8300000, guid: 2d8ea15c8c657ef42b5389dca5232b1e, type: 3}
 --- !u!4 &533834249
 Transform:
   m_ObjectHideFlags: 0
@@ -17485,7 +17485,7 @@ MonoBehaviour:
   - trackName: Menu
     clip: {fileID: 8300000, guid: ae467adfa64380446916d3de64c2b903, type: 3}
   - trackName: Game
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: c97f283c66323ac4f85754c03b86e1d0, type: 3}
 --- !u!1 &538285222
 GameObject:
   m_ObjectHideFlags: 0

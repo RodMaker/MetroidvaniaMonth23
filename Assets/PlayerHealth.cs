@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Bardent
 {
-    public class PlayerHealth : MonoBehaviour
+    public class PlayerHealth : Singleton<PlayerHealth>
     {
         [SerializeField] private int maxHealth = 3;
         //[SerializeField] private float knockBackThrustAmount = 10f;
@@ -25,8 +25,10 @@ namespace Bardent
 
         public GameObject floatingText;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            
             //flash = GetComponent<Flash>();
             //knockback = GetComponent<Knockback>();
 
@@ -58,11 +60,8 @@ namespace Bardent
 
         private void OnCollisionStay2D(Collision2D other)
         {
-            Debug.Log(other.transform.parent.gameObject);
-
-            if (other.transform.parent.gameObject.CompareTag("Enemy"))
+            if (other.gameObject.CompareTag("Enemy"))
             {
-                Debug.Log("Took Damage");
                 TakeDamage(1);
             }
         }
@@ -103,9 +102,9 @@ namespace Bardent
                 currentHealth = 0;
                 Debug.Log("Player Death");
 
-                //BGM.Instance.PauseMusic();
+                //AudioManager.Instance.PauseMusic();
                 SoundManager.Instance.PlaySound3D("PlayerDeath", transform.position);
-                //GameManager.Instance.GameOver();
+                GameManager.gm.GameOver();
                 //flash.StopAllCoroutines();
                 //knockback.StopAllCoroutines();
                 //knockback.SetKnockBack(false);

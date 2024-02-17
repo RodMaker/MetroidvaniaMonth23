@@ -14,16 +14,23 @@ namespace Bardent
         public Slider musicSlider;
         public Slider sfxSlider;
 
+        private bool firstTime = true;
+
         private void Start()
         {
             LoadVolume();
-            MusicManager.Instance.PlayMusic("Menu");
+
+            if (firstTime)
+            {   
+                MusicManager.Instance.PlayMusic("Menu");
+            }
         }
 
         public void ChangeScene(string name)
         {
-            SceneManager.LoadScene(name);
+            firstTime = false;
             MusicManager.Instance.PlayMusic("Game");
+            SceneManager.LoadScene(name);
         }
 
         public void Quit()

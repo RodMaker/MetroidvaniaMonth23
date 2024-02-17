@@ -4,6 +4,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using Bardent.CoreSystem;
 using System.Linq;
+using UnityEngine.Analytics;
+using UnityEngine.SceneManagement;
+using Bardent;
 
 [Serializable]
 class PlayerDataSaveSystem
@@ -31,6 +34,10 @@ public class GameManager : MonoBehaviour
     public static GameManager gm;
 
     private string filePath;
+
+    public GameObject gameOverUI;
+    private GameObject playerObj;
+    private bool firstTime = true;
 
     private void Awake()
     {
@@ -87,6 +94,10 @@ public class GameManager : MonoBehaviour
 
     public void Load()
     {
+        gameOverUI.SetActive(false); // ADDED
+        playerObj.SetActive(true); // ADDED
+        playerObj.GetComponent<PlayerHealth>().StartPlayer(); // ADDED
+
         if (File.Exists(filePath))
         {
             Player player = FindObjectOfType<Player>();
@@ -104,6 +115,51 @@ public class GameManager : MonoBehaviour
             playerInputHandler.dashUnlocked = data.canDash;
             playerInputHandler.jumpUnlocked = data.canJump;
             player.crouchUnlocked = data.canCrouch;
+        }
+    }
+
+    public void GameOver()
+    {
+        gameOverUI.SetActive(true);
+        Debug.Log("Game Over");
+    }
+
+    public void Restart()
+    {
+        firstTime = false;
+        gameOverUI.SetActive(false);
+        SceneManager.LoadScene("Game");
+        playerObj.SetActive(true);
+        playerObj.GetComponent<PlayerHealth>().StartPlayer();
+    }
+
+    public void MainMenu()
+    {
+        firstTime = false;
+        gameOverUI.SetActive(false);
+        SceneManager.LoadScene("Menu");
+        playerObj.GetComponent<PlayerHealth>().StartPlayer();
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void OnEnable()
+    {
+        Player.OnStart += GetPlayer;
+        SceneManager.sceneLoaded += SetPlayer;
+    }
+
+    public void OnDestroy() => Player.OnStart -= GetPlayer;
+
+    private void GetPlayer(GameObject player) => playerObj = player;
+    private void SetPlayer(Scene scene, LoadSceneMode mode)
+    {
+        if (!firstTime && scene.buildIndex == 1)
+        {
+            playerObj.SetActive(true);
         }
     }
 
@@ -137,7 +193,6 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
     }
-
 
     public enum GameState
     {
