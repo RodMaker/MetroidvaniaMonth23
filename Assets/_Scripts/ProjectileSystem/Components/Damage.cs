@@ -50,8 +50,8 @@ namespace Bardent.ProjectileSystem.Components
                 if (!hit.collider.transform.gameObject.TryGetComponent(out IDamageable damageable))
                     continue;
                 
-                damageable.Damage(new DamageData(amount, projectile.gameObject));
-                
+                damageable.Damage(new DamageData(amount, projectile.gameObject)); 
+
                 OnDamage?.Invoke(damageable);
                 OnRaycastHit?.Invoke(hit);
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Bardent;
 using Bardent.Combat.Damage;
 using Bardent.Combat.KnockBack;
 using Bardent.Combat.PoiseDamage;
@@ -41,6 +42,8 @@ public class MeleeAttackState : AttackState {
 			{
 				poiseDamageable.DamagePoise(new PoiseDamageData(stateData.PoiseDamage, core.Root));
 			}
+
+			PlayerHealth.Instance.TakeDamage(1); // ADDED
 		}
 	}
 }

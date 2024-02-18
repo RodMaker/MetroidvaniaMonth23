@@ -17438,6 +17438,12 @@ MonoBehaviour:
   - groupID: PlayerDeath
     clips:
     - {fileID: 8300000, guid: 2d8ea15c8c657ef42b5389dca5232b1e, type: 3}
+  - groupID: EnemyTakeDamage
+    clips:
+    - {fileID: 8300000, guid: dd2221ec3202027459bc845a6bb95a65, type: 3}
+  - groupID: EnemyDeath
+    clips:
+    - {fileID: 8300000, guid: dd2221ec3202027459bc845a6bb95a65, type: 3}
 --- !u!4 &533834249
 Transform:
   m_ObjectHideFlags: 0
@@ -18920,7 +18926,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &605767070
 Transform:
   m_ObjectHideFlags: 0
