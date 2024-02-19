@@ -8,11 +8,13 @@ using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
 using Bardent;
 using System.Collections;
+using Cinemachine;
 
 [Serializable]
 class PlayerDataSaveSystem
 {
-    public float health;
+    public int currentHealth;
+    public int maxHealth;
     public float playerPosX, playerPosY;
     public bool canGrab;
     public bool canDash;
@@ -40,6 +42,16 @@ public class GameManager : MonoBehaviour
     private GameObject playerObj;
     private bool firstTime = true;
 
+    [SerializeField] private Transform respawnPoint;
+    [SerializeField] private GameObject player;
+    [SerializeField] private float respawnTime;
+
+    private float respawnTimeStart;
+
+    private bool respawn;
+
+    private CinemachineVirtualCamera CVC;
+
     private void Awake()
     {
         if (gm == null)
@@ -60,6 +72,11 @@ public class GameManager : MonoBehaviour
         Debug.Log("GAME LOADED");
     }
 
+    private void Start()
+    {
+        CVC = GameObject.Find("Player Camera").GetComponent<CinemachineVirtualCamera>();
+    }
+
     public void Save()
     {
         Player player = FindObjectOfType<Player>();
@@ -70,7 +87,8 @@ public class GameManager : MonoBehaviour
 
         PlayerDataSaveSystem data = new PlayerDataSaveSystem();
 
-        data.health = player.GetComponentInChildren<Stats>().Health.CurrentValue;
+        data.currentHealth = player.GetComponent<PlayerHealth>().currentHealth;
+        data.maxHealth = player.GetComponent<PlayerHealth>().maxHealth;
         data.playerPosX = player.transform.position.x;
         data.playerPosY = player.transform.position.y;
         data.canGrab = playerInputHandler.grabUnlocked;
@@ -95,9 +113,9 @@ public class GameManager : MonoBehaviour
 
     public void Load()
     {
-        gameOverUI.SetActive(false); // ADDED
-        playerObj.SetActive(true); // ADDED
-        playerObj.GetComponent<PlayerHealth>().StartPlayer(); // ADDED
+        //gameOverUI.SetActive(false); // ADDED
+        //playerObj.SetActive(true); // ADDED
+        //playerObj.GetComponent<PlayerHealth>().StartPlayer(); // ADDED
 
         if (File.Exists(filePath))
         {
@@ -110,7 +128,8 @@ public class GameManager : MonoBehaviour
             PlayerDataSaveSystem data = (PlayerDataSaveSystem)bf.Deserialize(file);
             file.Close();
 
-            player.GetComponentInChildren<Stats>().Health.CurrentValue = data.health;
+            player.GetComponent<PlayerHealth>().currentHealth = data.currentHealth;
+            player.GetComponent<PlayerHealth>().maxHealth = data.maxHealth;
             player.transform.position = new Vector3(data.playerPosX, data.playerPosY, 0);
             playerInputHandler.grabUnlocked = data.canGrab;
             playerInputHandler.dashUnlocked = data.canDash;
@@ -168,6 +187,31 @@ public class GameManager : MonoBehaviour
         if (!firstTime && scene.buildIndex == 1)
         {
             playerObj.SetActive(true);
+        }
+    }
+
+    private void Update()
+    {
+        CheckRespawn();
+    }
+
+    public void Respawn()
+    {
+        respawnTimeStart = Time.time;
+        respawn = true;
+        gameOverUI.SetActive(false);
+    }
+
+    private void CheckRespawn()
+    {
+        if (Time.time >= respawnTimeStart - respawnTime && respawn)
+        {
+            var playerTemp = Instantiate(player, respawnPoint);
+            player.GetComponentInParent<PlayerHealth>().StartPlayer();
+            player.SetActive(true);
+            Load();
+            CVC.m_Follow = playerTemp.transform;
+            respawn = false;
         }
     }
 
