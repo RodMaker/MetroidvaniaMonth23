@@ -10,6 +10,8 @@ using UnityEngine.Rendering;
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance;
+
     #region State Variables
     public PlayerStateMachine StateMachine { get; private set; }
 
@@ -64,6 +66,8 @@ public class Player : MonoBehaviour
     #region Unity Callback Functions
     private void Awake()
     {
+        Instance = this;
+
         Core = GetComponentInChildren<Core>();
 
         primaryWeapon = transform.Find("PrimaryWeapon").GetComponent<Weapon>();

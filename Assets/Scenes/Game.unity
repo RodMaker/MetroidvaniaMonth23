@@ -1476,6 +1476,7 @@ GameObject:
   - component: {fileID: 101675406}
   - component: {fileID: 101675408}
   - component: {fileID: 101675407}
+  - component: {fileID: 101675409}
   m_Layer: 5
   m_Name: GameOverMenu
   m_TagString: Untagged
@@ -1545,6 +1546,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 101675405}
   m_CullTransparentMesh: 1
+--- !u!114 &101675409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101675405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49dddda5b96c74e40adbc378c7f48d12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &104232994
 GameObject:
   m_ObjectHideFlags: 0
@@ -3447,7 +3460,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 510123188303463660}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 510123188303463661}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7641726e322e6244e9f3c8975354ac13, type: 3}
@@ -3465,7 +3478,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 510123188303463660}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 510123188303463661}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68cd00b097f45b343975279ec0b849f5, type: 3}
@@ -19685,9 +19698,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverUI: {fileID: 101675405}
-  respawnPoint: {fileID: 1070363915}
-  player: {fileID: 510123188394506953, guid: 16b93024bf08dd3479dd5db4d67bbf9e, type: 3}
-  respawnTime: 5
+  playerObj: {fileID: 510123188303463661}
+  CVC: {fileID: 1850200803}
 --- !u!4 &979532588
 Transform:
   m_ObjectHideFlags: 0
@@ -57017,7 +57029,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 979532587}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: Respawn
+        m_MethodName: Restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -62142,6 +62154,7 @@ GameObject:
   - component: {fileID: 1850200802}
   - component: {fileID: 1850200803}
   - component: {fileID: 1850200804}
+  - component: {fileID: 1850200805}
   m_Layer: 0
   m_Name: Player Camera
   m_TagString: Untagged
@@ -62226,6 +62239,18 @@ MonoBehaviour:
     m_FrequencyGain: 1
     m_Duration: 1
     m_NoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!114 &1850200805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850200801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b3b90e0803e6f4f9898e579a3900bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1862952941
 GameObject:
   m_ObjectHideFlags: 0
@@ -66044,6 +66069,12 @@ PrefabInstance:
       objectReference: {fileID: 1862952946}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16b93024bf08dd3479dd5db4d67bbf9e, type: 3}
+--- !u!1 &510123188303463661 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 510123188394506953, guid: 16b93024bf08dd3479dd5db4d67bbf9e,
+    type: 3}
+  m_PrefabInstance: {fileID: 510123188303463660}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1527188946495992051
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -126,7 +126,7 @@ namespace Bardent.Utilities
             if (distance == Mathf.Infinity)
             {
                 // Draw some large distance e.g. 5 scene widths long.
-                float sceneWidth = Camera.main.orthographicSize * Camera.main.aspect * 2f;
+                float sceneWidth = UnityEngine.Camera.main.orthographicSize * UnityEngine.Camera.main.aspect * 2f;
                 distance = sceneWidth * 5f;
             }
 

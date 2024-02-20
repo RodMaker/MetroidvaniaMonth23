@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 using Bardent;
 using System.Collections;
 using Cinemachine;
+using UnityEngine.XR;
 
 [Serializable]
 class PlayerDataSaveSystem
@@ -38,19 +39,9 @@ public class GameManager : MonoBehaviour
 
     private string filePath;
 
-    public GameObject gameOverUI;
-    private GameObject playerObj;
+    [SerializeField] private GameObject gameOverUI;
+    public GameObject playerObj;
     private bool firstTime = true;
-
-    [SerializeField] private Transform respawnPoint;
-    [SerializeField] private GameObject player;
-    [SerializeField] private float respawnTime;
-
-    private float respawnTimeStart;
-
-    private bool respawn;
-
-    private CinemachineVirtualCamera CVC;
 
     private void Awake()
     {
@@ -70,11 +61,6 @@ public class GameManager : MonoBehaviour
         Load();
 
         Debug.Log("GAME LOADED");
-    }
-
-    private void Start()
-    {
-        CVC = GameObject.Find("Player Camera").GetComponent<CinemachineVirtualCamera>();
     }
 
     public void Save()
@@ -113,10 +99,6 @@ public class GameManager : MonoBehaviour
 
     public void Load()
     {
-        //gameOverUI.SetActive(false); // ADDED
-        //playerObj.SetActive(true); // ADDED
-        //playerObj.GetComponent<PlayerHealth>().StartPlayer(); // ADDED
-
         if (File.Exists(filePath))
         {
             Player player = FindObjectOfType<Player>();
@@ -138,6 +120,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        gameOverUI = GameOverMenu.Instance.gameObject;
+    }
+
     public void GameOver()
     {
         Debug.Log("Game Over");
@@ -155,9 +142,17 @@ public class GameManager : MonoBehaviour
     {
         firstTime = false;
         gameOverUI.SetActive(false);
-        SceneManager.LoadScene("Game");
+        StartCoroutine(RestartRoutine());
+        gameOverUI = GameObject.Find("Canvas").GetComponentInChildren<GameOverMenu>().gameObject;
+    }
+
+    private IEnumerator RestartRoutine()
+    {
+        var asyncLevelLoad = SceneManager.LoadSceneAsync("Game", LoadSceneMode.Single);
+        yield return new WaitUntil(() => asyncLevelLoad.isDone);
         playerObj.SetActive(true);
         playerObj.GetComponent<PlayerHealth>().StartPlayer();
+        Bardent.Camera.Instance.GetComponent<CinemachineVirtualCamera>().m_Follow = playerObj.transform;
     }
 
     public void MainMenu()
@@ -187,31 +182,6 @@ public class GameManager : MonoBehaviour
         if (!firstTime && scene.buildIndex == 1)
         {
             playerObj.SetActive(true);
-        }
-    }
-
-    private void Update()
-    {
-        CheckRespawn();
-    }
-
-    public void Respawn()
-    {
-        respawnTimeStart = Time.time;
-        respawn = true;
-        gameOverUI.SetActive(false);
-    }
-
-    private void CheckRespawn()
-    {
-        if (Time.time >= respawnTimeStart - respawnTime && respawn)
-        {
-            var playerTemp = Instantiate(player, respawnPoint);
-            player.GetComponentInParent<PlayerHealth>().StartPlayer();
-            player.SetActive(true);
-            Load();
-            CVC.m_Follow = playerTemp.transform;
-            respawn = false;
         }
     }
 
