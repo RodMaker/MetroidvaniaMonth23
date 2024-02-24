@@ -2113,8 +2113,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 979532587}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1862952948}
+        m_TargetAssemblyTypeName: Bardent.UIManager, Assembly-CSharp
         m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
@@ -19697,9 +19697,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95c7895d3443f74f922b6a08c63032e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverUI: {fileID: 101675405}
+  gameOverUI: {fileID: 0}
   playerObj: {fileID: 510123188303463661}
-  CVC: {fileID: 1850200803}
+  firstTime: 1
 --- !u!4 &979532588
 Transform:
   m_ObjectHideFlags: 0
@@ -57027,8 +57027,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 979532587}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1862952948}
+        m_TargetAssemblyTypeName: Bardent.UIManager, Assembly-CSharp
         m_MethodName: Restart
         m_Mode: 1
         m_Arguments:
@@ -62265,6 +62265,7 @@ GameObject:
   - component: {fileID: 1862952942}
   - component: {fileID: 1862952946}
   - component: {fileID: 1862952947}
+  - component: {fileID: 1862952948}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -62392,6 +62393,19 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: 1c7b3dcb1dfc7e549997af332f8bbf61, type: 2}
   musicSlider: {fileID: 1305384256}
   sfxSlider: {fileID: 1422273290}
+--- !u!114 &1862952948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862952941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 753e2c5e71f71d740bde57e86f449634, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameOverMenu: {fileID: 101675405}
 --- !u!1 &1863432800
 GameObject:
   m_ObjectHideFlags: 0
@@ -65233,8 +65247,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 979532587}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1862952948}
+        m_TargetAssemblyTypeName: Bardent.UIManager, Assembly-CSharp
         m_MethodName: MainMenu
         m_Mode: 1
         m_Arguments:

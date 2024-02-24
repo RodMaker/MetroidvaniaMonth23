@@ -1,4 +1,6 @@
+using System;
 using Bardent.CoreSystem;
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,6 +11,8 @@ namespace Bardent
 {
     public class PlayerHealth : Singleton<PlayerHealth>
     {
+        public static event Action OnPlayerDeath;
+
         public int maxHealth = 3;
         //[SerializeField] private float knockBackThrustAmount = 10f;
         [SerializeField] private float damageRecoveryTime = 1f;
@@ -64,6 +68,8 @@ namespace Bardent
             currentLevel = 1;
 
             UpdateCurrentLevel();
+
+            Bardent.Camera.Instance.GetComponent<CinemachineVirtualCamera>().m_Follow = gameObject.transform;
         }
 
         private void OnCollisionStay2D(Collision2D other)
@@ -115,11 +121,12 @@ namespace Bardent
 
                 //AudioManager.Instance.PauseMusic();
                 SoundManager.Instance.PlaySound3D("PlayerDeath", transform.position);
-                GameManager.gm.GameOver();
+                OnPlayerDeath?.Invoke();
+                //GameManager.gm.GameOver();
                 //flash.StopAllCoroutines();
                 //knockback.StopAllCoroutines();
                 //knockback.SetKnockBack(false);
-                gameObject.SetActive(false);
+                //gameObject.SetActive(false);
             }
         }
 

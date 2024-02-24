@@ -39,9 +39,9 @@ public class GameManager : MonoBehaviour
 
     private string filePath;
 
-    [SerializeField] private GameObject gameOverUI;
+    public GameObject gameOverUI;
     public GameObject playerObj;
-    private bool firstTime = true;
+    public bool firstTime = true;
 
     private void Awake()
     {
@@ -59,8 +59,6 @@ public class GameManager : MonoBehaviour
         filePath = Application.persistentDataPath + "/playerInfo.dat";
 
         Load();
-
-        Debug.Log("GAME LOADED");
     }
 
     public void Save()
@@ -117,14 +115,16 @@ public class GameManager : MonoBehaviour
             playerInputHandler.dashUnlocked = data.canDash;
             playerInputHandler.jumpUnlocked = data.canJump;
             player.crouchUnlocked = data.canCrouch;
+
+            Debug.Log("GAME LOADED");
         }
     }
 
+    /*
     private void Start()
     {
-        gameOverUI = GameOverMenu.Instance.gameObject;
+        //gameOverUI = GameOverMenu.Instance.gameObject;
     }
-
     public void GameOver()
     {
         Debug.Log("Game Over");
@@ -135,15 +135,18 @@ public class GameManager : MonoBehaviour
     private IEnumerator GameOverRoutine()
     {
         yield return new WaitForSeconds(1);
+        //SceneManager.LoadScene("GameOver");
         gameOverUI.SetActive(true);
     }
 
     public void Restart()
     {
         firstTime = false;
-        gameOverUI.SetActive(false);
+        //gameOverUI.SetActive(false);
+        //gameOverUI = GameOverMenu.Instance.gameObject;
         StartCoroutine(RestartRoutine());
-        gameOverUI = GameObject.Find("Canvas").GetComponentInChildren<GameOverMenu>().gameObject;
+        //gameOverUI = GameObject.Find("Canvas").GetComponentInChildren<GameOverMenu>().gameObject;
+        //gameOverUI = FindObjectOfType<GameOverMenu>().gameObject;
     }
 
     private IEnumerator RestartRoutine()
@@ -153,12 +156,13 @@ public class GameManager : MonoBehaviour
         playerObj.SetActive(true);
         playerObj.GetComponent<PlayerHealth>().StartPlayer();
         Bardent.Camera.Instance.GetComponent<CinemachineVirtualCamera>().m_Follow = playerObj.transform;
+        //gameOverUI = GameOverMenu.Instance.gameObject;
     }
 
     public void MainMenu()
     {
         firstTime = false;
-        gameOverUI.SetActive(false);
+        //gameOverUI.SetActive(false);
         SceneManager.LoadScene("Menu");
         playerObj.GetComponent<PlayerHealth>().StartPlayer();
     }
@@ -167,6 +171,7 @@ public class GameManager : MonoBehaviour
     {
         Application.Quit();
     }
+    */
 
     public void OnEnable()
     {
