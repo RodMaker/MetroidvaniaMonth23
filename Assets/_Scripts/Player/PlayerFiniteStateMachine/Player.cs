@@ -116,7 +116,7 @@ public class Player : MonoBehaviour
 
         OnStart.Invoke(this.gameObject); // ADDED
         StartPlayer(); // ADDED
-        EnablePlayer(); // ADDED
+        //EnablePlayer(); // ADDED
     }
 
     // ADDED
@@ -169,6 +169,7 @@ public class Player : MonoBehaviour
     #endregion
 
     // ADDED
+    /*
     private void OnEnable()
     {
         PlayerHealth.OnPlayerDeath += DisablePlayer;
@@ -188,4 +189,5 @@ public class Player : MonoBehaviour
     {
         gameObject.SetActive(true);
     }
+    */
 }

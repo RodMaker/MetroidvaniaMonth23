@@ -11,7 +11,7 @@ namespace Bardent
 {
     public class PlayerHealth : Singleton<PlayerHealth>
     {
-        public static event Action OnPlayerDeath;
+        //public static event Action OnPlayerDeath;
 
         public int maxHealth = 3;
         //[SerializeField] private float knockBackThrustAmount = 10f;
@@ -37,12 +37,17 @@ namespace Bardent
 
         private ParticleManager particleManager;
 
+        Vector2 checkpointPos;
+        Rigidbody2D playerRB;
+
         protected override void Awake()
         {
             base.Awake();
-            
+
             //flash = GetComponent<Flash>();
             //knockback = GetComponent<Knockback>();
+            playerRB = GetComponent<Rigidbody2D>();
+            checkpointPos = new Vector2(-17.5f, 21.3f);
 
             StartPlayer();
         }
@@ -121,13 +126,31 @@ namespace Bardent
 
                 //AudioManager.Instance.PauseMusic();
                 SoundManager.Instance.PlaySound3D("PlayerDeath", transform.position);
-                OnPlayerDeath?.Invoke();
+                StartCoroutine(Respawn(0.5f));
+                //OnPlayerDeath?.Invoke();
                 //GameManager.gm.GameOver();
                 //flash.StopAllCoroutines();
                 //knockback.StopAllCoroutines();
                 //knockback.SetKnockBack(false);
                 //gameObject.SetActive(false);
             }
+        }
+
+        IEnumerator Respawn(float duration)
+        {
+            playerRB.simulated = false;
+            playerRB.velocity = new Vector2(0, 0);
+            transform.localScale = new Vector3(0, 0, 0);
+            yield return new WaitForSeconds(duration);
+            transform.position = checkpointPos;
+            transform.localScale = new Vector3(1, 1, 1);
+            playerRB.simulated = true;
+            StartPlayer();
+        }
+
+        public void UpdateCheckpoint(Vector2 pos)
+        {
+            checkpointPos = pos;
         }
 
         private IEnumerator DamageRecoveryRoutine()

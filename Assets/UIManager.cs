@@ -9,6 +9,7 @@ namespace Bardent
     {
         public GameObject gameOverMenu;
 
+        /*
         private void OnEnable()
         {
             PlayerHealth.OnPlayerDeath += EnableGameOverMenu;
@@ -23,6 +24,7 @@ namespace Bardent
         {
             gameOverMenu.SetActive(true);
         }
+        */
 
         public void Restart()
         {

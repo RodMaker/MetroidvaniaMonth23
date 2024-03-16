@@ -20,16 +20,18 @@ namespace Bardent
         {
             LoadVolume();
 
+            /*
             if (firstTime)
             {   
                 MusicManager.Instance.PlayMusic("Menu");
             }
+            */
         }
 
         public void ChangeScene(string name)
         {
             firstTime = false;
-            MusicManager.Instance.PlayMusic("Game");
+            //MusicManager.Instance.PlayMusic("Game");
             SceneManager.LoadScene(name);
         }
 
